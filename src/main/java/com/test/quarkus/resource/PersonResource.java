@@ -2,6 +2,8 @@ package com.test.quarkus.resource;
 
 import com.test.quarkus.entity.Person;
 import com.test.quarkus.service.PersonService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -24,9 +26,11 @@ public class PersonResource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/create/{name}")
-    
-    public List<Person> createPerson(@PathParam(value = "name") String name, @QueryParam(value = "dob") String dob) {
+    @Path("/{name}/create")
+    @ApiOperation("Creates a person")
+    public List<Person> createPerson(@ApiParam(value = "Name of the person", example = "Anoop") 
+            @PathParam(value = "name") String name, 
+            @ApiParam(value = "DOB of the person", example = "24-08-1992") @QueryParam(value = "dob") String dob) {
         personService.addPerson(name, dob);
         return personService.findAllAlivePersons();
     }
@@ -34,6 +38,7 @@ public class PersonResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/allAlive")
+    @ApiOperation("List all living persons")
     public List<Person> findAllAlive() {
         return personService.findAllAlivePersons();
     }

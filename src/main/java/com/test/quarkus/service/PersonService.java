@@ -18,16 +18,17 @@ import javax.inject.Inject;
 public class PersonService {
     
     @Inject
-    private PersonRepository personRepository;
+    PersonRepository personRepository;
     
     public void addPerson(String name, String dob) {
-        Integer year = Integer.valueOf(dob.split("-")[0]);
+        Integer date = Integer.valueOf(dob.split("-")[0]);
         Month month = Month.of(Integer.valueOf(dob.split("-")[1]));
-        Integer date = Integer.valueOf(dob.split("-")[2]);
+        Integer year = Integer.valueOf(dob.split("-")[2]);
+       
         Person p = new Person(null, name, LocalDate.of(year, month, date), Status.Alive);
         personRepository.create(p);
     }
-        
+    
     public List<Person> findAllAlivePersons() {
         return personRepository.findAlive();
     }
