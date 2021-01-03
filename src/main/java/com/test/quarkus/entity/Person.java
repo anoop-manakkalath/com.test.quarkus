@@ -1,6 +1,5 @@
 package com.test.quarkus.entity;
 
-import com.test.quarkus.entity.Status;
 import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

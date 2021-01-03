@@ -6,7 +6,6 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 
 /**
  *
@@ -15,32 +14,39 @@ import javax.transaction.Transactional;
 @ApplicationScoped
 public class PersonRepository implements PanacheRepository<Person> {
 
-    @Override
-    public Optional<Person> findByIdOptional(Long id) {
+    public Optional<Person> findPersonByIdOptional(Long id) {
         return findByIdOptional(id);
     }
 
-    public List<Person> findByName(String name) {
+    public List<Person> findPersonByName(String name) {
         return list("name", name);
     }
-
-    public List<Person> findAlive() {
-        return list("status", Status.Alive);
+    
+    public List<Person> findAllPersons() {
+        return listAll();
     }
 
-    @Override
-    public boolean deleteById(Long id) {
+    public List<Person> findAllEmployedPersons() {
+        return list("status", Status.Employed);
+    }
+    
+    public List<Person> findAllUnemployedPersons() {
+        return list("status", Status.Unemployed);
+    }
+
+    public boolean deletePersonById(Long id) {
         return deleteById(id);
     }
+    
+    public void deleteAllPersons(List<Person> persons) {
+        delete("DELETE FROM Person WHERE p.id IN ?1", persons);
+    }
 
-    @Transactional
-    public void create(Person person) {
+    public void createPerson(Person person) {
         persistAndFlush(person);
     }
     
-    @Transactional
-    public void createAll(List<Person> persons) {
+    public void createAllPersons(List<Person> persons) {
         persist(persons);
-        flush();
     }
 }

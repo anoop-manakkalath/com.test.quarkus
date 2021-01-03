@@ -6,6 +6,18 @@ package com.test.quarkus.entity;
  */
 public enum Status {
     
-    Alive,
-    Dead
+    Employed("Employed"),
+    Unemployed("Unemployed");
+    
+    private final String value;
+    
+    Status(String value) {
+        this.value = value;
+    }
+    
+    @Override
+    public String toString() {
+        return value;
+    }
+    
 }

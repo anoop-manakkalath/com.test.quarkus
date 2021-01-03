@@ -11,7 +11,6 @@ import io.quarkus.runtime.annotations.QuarkusMain;
 public class Main {
 
     public static void main(String... args) {
-        System.out.println("Starting the service...");
         Quarkus.run(args);
         System.out.println("Successfully started the service.");
     }
